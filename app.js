@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express()
 const port = process.env.PORT || 3000
-const post = require('./post.js')
-const register = require('./register.js');
-const login = require('./login.js');
-const profile= require('./profile.js');
-const logout = require('./logout.js');
+const post = require('./routes/post.js')
+const register = require('./routes/register.js');
+const login = require('./routes/login.js');
+const profile= require('./routes/profile.js');
+const logout = require('./routes/logout.js');
 const session = require('express-session')
 
 
