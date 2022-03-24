@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const post = require('./post.js')
 const register = require('./register.js');
 const login = require('./login.js');
