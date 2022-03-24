@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express()
-const port = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 const post = require('./routes/post.js')
 const register = require('./routes/register.js');
 const login = require('./routes/login.js');
@@ -51,6 +51,6 @@ router.use('/profile', profile)
 router.use('/logout', logout)
 
 
-router.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+router.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`)
 })

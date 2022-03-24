@@ -214,7 +214,7 @@ class Controller{
 
         User.findProfile(Profile, Post, userLogin)
         .then((data) => {
-            console.log(data);
+            // console.log(data);
             res.render('profile', {data})
         })
         .catch((err) => {
