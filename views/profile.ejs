@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 180px;
+        }
+
+        div.gallery:hover {
+        border: 1px solid #777;
+        }
+
+        div.gallery img {
+        width: 100%;
+        height: auto;
+        }
+
+        div.desc {
+        padding: 15px;
+        text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Profile</h1>
+    <p>Name: <%= result.Profile.name %></p>
+    <p>Biodata: <%= result.Profile.bio %></p>
+    <p>Gender: <%= result.Profile.gender %></p>
+    <p>Gif Post: <%= result.Posts.length %></p>
+    <br>
+
+    <% data.forEach(el => { %>
+        <div class="gallery">
+            <a target="_blank" href="<%= el.url %>">
+                <img src="<%= el.url %>" alt="<%= el.name %>" width="600" height="400">
+            </a>
+        </div>
+    <% }) %>
+
+</body>
+</html>

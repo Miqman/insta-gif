@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <style>
+                div.gallery {
+                margin: 5px;
+                border: 1px solid #ccc;
+                float: left;
+                width: 180px;
+                }
+
+                div.gallery:hover {
+                border: 1px solid #777;
+                }
+
+                div.gallery img {
+                width: 100%;
+                height: 125px;
+                }
+
+                div.desc {
+                padding: 5px;
+                text-align: center;
+                }
+            </style>
+        </head>
+    <body>
+
+        <form action="/post?sName=">
+            <input type="search" placeholder="Search Name.." name="sName">
+            <button type="submit">Search</button>
+        </form><br>
+        
+        <a href="/post/postGif"><button>Post Gif</button><a>
+
+        <% if (!user.Profile) { %>
+        <a href="/profile/profileAdd"><button>Complete Your Profile</button></a>
+        <% } else {%>
+            <a href="/profile"><button>Profile</button></a>
+            <% } %>
+
+        <a href="/logout"><button>Logout</button></a>
+        <br><br>
+        <% posts.forEach(res => { %>
+            <div class="gallery">
+                
+                <a target="_blank" href="<%= res.url %>">
+                <img src="<%= res.url %>" alt="<%= res.name %>" width="600" height="400">
+                </a>
+
+                <div class="desc">Posted by <%= res.User.username %> </div>
+                <div class="desc" style="font-size: 15px;">on <%= convertDate(res.User.createdAt) %> </div>
+                <div class="desc">Category: <%= res.Category.name %> </div>
+                <div class="desc">Votes: <%= res.vote %></div>
+                <% if (user.role === 'admin') { %>
+                <a href="/post/delete/<%= res.id %>"><button>Delete</button>
+
+                <% } else if (user.role === 'user'){%>
+
+                    <a class="desc" href="/post/like/<%= res.id %>"><button>Vote</button>
+
+                <%} %>
+
+
+            </div>
+        <% }) %>
+        
+    </body>
+</html>
