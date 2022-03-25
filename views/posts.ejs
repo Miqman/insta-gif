@@ -15,15 +15,15 @@
 
                 div.gallery img {
                 width: 100%;
-                height: auto;
+                height: 125px;
                 }
 
                 div.desc {
-                padding: 15px;
+                padding: 5px;
                 text-align: center;
                 }
             </style>
-</head>
+        </head>
     <body>
 
         <form action="/post?sName=">
@@ -33,12 +33,14 @@
         
         <a href="/post/postGif"><button>Post Gif</button><a>
 
-            <% if (!user.Profile) { %>
-            <a href="/profile/profileAdd"><button>Complete Your Profile</button></a>
-            <% } else {%>
-                <a href="/profile"><button>Profile</button></a>
-                <% } %>
+        <% if (!user.Profile) { %>
+        <a href="/profile/profileAdd"><button>Complete Your Profile</button></a>
+        <% } else {%>
+            <a href="/profile"><button>Profile</button></a>
+            <% } %>
 
+        <a href="/logout"><button>Logout</button></a>
+        <br><br>
         <% posts.forEach(res => { %>
             <div class="gallery">
                 
@@ -47,6 +49,7 @@
                 </a>
 
                 <div class="desc">Posted by <%= res.User.username %> </div>
+                <div class="desc" style="font-size: 15px;">on <%= convertDate(res.User.createdAt) %> </div>
                 <div class="desc">Category: <%= res.Category.name %> </div>
                 <div class="desc">Votes: <%= res.vote %></div>
                 <% if (user.role === 'admin') { %>
@@ -54,13 +57,13 @@
 
                 <% } else if (user.role === 'user'){%>
 
-
-                        <a class="desc" href="/post/like/<%= res.id %>"><button>Vote</button>
+                    <a class="desc" href="/post/like/<%= res.id %>"><button>Vote</button>
 
                 <%} %>
 
+
             </div>
         <% }) %>
-        <a href="/logout"><button>Logout</button></a>
+        
     </body>
 </html>

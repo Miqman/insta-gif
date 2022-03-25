@@ -2,6 +2,7 @@ const  {User, Profile, Category, Post} = require('../models/index.js');
 const bcrypt = require('bcryptjs');
 const { imageKit } = require('../helpers/imageKit.js');
 const { Op } = require('sequelize');
+const convertDate = require('../helpers/convertDate')
 
 
 let userLogin;
@@ -105,7 +106,7 @@ class Controller{
         })
         .then((user)=>{
             temp.push(user)
-            res.render('posts', {posts: temp[0], user: temp[1]})
+            res.render('posts', {posts: temp[0], user: temp[1], convertDate})
         })
         .catch((err) => {
             console.log(err)
@@ -148,26 +149,18 @@ class Controller{
 
     static async postGifPost(req,res){
         try {
+            
+            const {name,CategoryId} = req.body
             const {buffer, originalname} = req.file
             const result = await imageKit(buffer, originalname)
             const imgUrl = result.data.url
-
-            const {name, url, CategoryId} = req.body
-            let obj = {
-                name,
-                url: imgUrl,
-                UserId: userLogin,
-                CategoryId
-            }
-            // console.log(req.file.filename, '============')
-            if(req.body.url){
-                    obj = {
+                let obj = {
                     name,
-                    url,
+                    url: imgUrl,
                     UserId: userLogin,
                     CategoryId
                 }
-            }
+           
             const posCreate = await Post.create(obj)
             if (posCreate) {
                 res.redirect('/post')
@@ -211,11 +204,19 @@ class Controller{
 
     static showProfile(req, res) {
         
-
+        let result = {}
         User.findProfile(Profile, Post, userLogin)
         .then((data) => {
             // console.log(data);
-            res.render('profile', {data})
+            result = data
+            return Post.findAll({
+                where: {
+                    UserId: userLogin
+                }
+            })
+        })
+        .then((data) => {       
+            res.render('profile', {result, data})
         })
         .catch((err) => {
             console.log(err)

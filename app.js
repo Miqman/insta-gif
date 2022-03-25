@@ -27,7 +27,7 @@ router.use(session({
 
 
 router.get('/', (req, res) => {
-  res.send('Home')
+  res.render('Home')
 })
 
 
